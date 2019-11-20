@@ -1,10 +1,10 @@
-#include "viginere.h"
+#include "vigenere.h"
 #include "constants.h"
 #include <string>
 
 using namespace std;
 
-void Viginere::initializeMatrix(int size, string symbols) {
+void Vigenere::initializeMatrix(int size, string symbols) {
 	m_numSymbols = size;
 
 	m_matrix.resize(size, vector<char>(size));
@@ -17,7 +17,7 @@ void Viginere::initializeMatrix(int size, string symbols) {
 	}
 }
 
-Viginere::Viginere() {
+Viginere::Vigenere() {
 	initializeMatrix(DEFAULT_TABLE.size());
 
 }
