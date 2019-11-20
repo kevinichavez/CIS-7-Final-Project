@@ -135,6 +135,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="viginere.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h" />

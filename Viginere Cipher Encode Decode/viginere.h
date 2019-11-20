@@ -7,9 +7,14 @@
 class Viginere {
 
 private:
-	char m_matrix[MAX_ROWS][MAX_COLUMNS];
-	int m_tableSize;
+	std::vector<std::vector<char>> m_matrix;
+	int m_numSymbols;
 
+	void initializeMatrix(int size, std::string symbols);
+
+public:
+	// Default Constructor
+	Viginere();
 };
 
 #endif

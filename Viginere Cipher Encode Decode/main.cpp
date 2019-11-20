@@ -2,7 +2,10 @@
 #include "viginere.h"
 
 int main() {
-	Viginere cypher;
+
+	Viginere* cipher = new Viginere;
 
 	std::cout << "Hello, world!\n";
+
+	delete cipher;
 }
