@@ -18,6 +18,6 @@ void Viginere::initializeMatrix(int size, string symbols) {
 }
 
 Viginere::Viginere() {
-	initializeMatrix(DEFAULT_TABLE.size());
+	initializeMatrix(DEFAULT_TABLE.size(), DEFAULT_TABLE);
 
 }
