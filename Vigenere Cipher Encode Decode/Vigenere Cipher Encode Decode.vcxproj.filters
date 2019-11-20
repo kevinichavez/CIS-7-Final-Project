@@ -18,15 +18,15 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="viginere.cpp">
+    <ClCompile Include="vigenere.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="viginere.h">
+    <ClInclude Include="constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="constants.h">
+    <ClInclude Include="vigenere.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

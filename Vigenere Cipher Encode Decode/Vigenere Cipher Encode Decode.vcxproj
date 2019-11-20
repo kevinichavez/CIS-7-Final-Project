@@ -135,11 +135,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="viginere.cpp" />
+    <ClCompile Include="vigenere.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h" />
-    <ClInclude Include="viginere.h" />
+    <ClInclude Include="vigenere.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -10,7 +10,7 @@ private:
 	std::vector<std::vector<char>> m_matrix;
 	int m_numSymbols;
 
-	void initializeMatrix(int size, std::string symbols);
+	void initializeMatrix(std::string symbols);
 
 public:
 	// Default Constructor
