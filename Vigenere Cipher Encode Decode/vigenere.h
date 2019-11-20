@@ -1,10 +1,10 @@
-#ifndef VIGINERE_H
-#define VIGINERE_H
+#ifndef VIGENERE_H
+#define VIGENERE_H
 #include "constants.h"
 #include <vector>
 #include <map>
 
-class Viginere {
+class Vigenere {
 
 private:
 	std::vector<std::vector<char>> m_matrix;
@@ -14,7 +14,7 @@ private:
 
 public:
 	// Default Constructor
-	Viginere();
+	Vigenere();
 };
 
 #endif

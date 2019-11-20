@@ -1,9 +1,9 @@
 #include <iostream>
-#include "viginere.h"
+#include "vigenere.h"
 
 int main() {
 
-	Viginere* cipher = new Viginere;
+	Vigenere* cipher = new Vigenere;
 
 	std::cout << "Hello, world!\n";
 
