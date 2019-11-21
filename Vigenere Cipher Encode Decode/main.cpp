@@ -12,7 +12,7 @@ int main() {
 	Vigenere* cipher = new Vigenere;
 
 	printEncDec("THIS IS SECRET", "XVHE UW NOPGDZ", cipher);
-	printEncDec("This... is! a/ test?", "XVHE UW NOPGDZ", cipher);
+	printEncDec("This... is! a/ test?", "XVHE??//. UW NOPGDZ", cipher);
 	printEncDec("THIS IS SECRET", "", cipher);
 	printEncDec("Hello, there!", "GENERAL KENOBI!", cipher);
 
