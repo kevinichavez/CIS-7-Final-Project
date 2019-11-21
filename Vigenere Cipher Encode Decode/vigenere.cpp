@@ -21,7 +21,7 @@ void Vigenere::initializeMatrix(string symbols) {
 	for (int i = 0; i < m_numSymbols; i++) {
 		for (int j = 0; j < m_numSymbols; j++)
 			m_matrix[i][j] = symbols[j];
-		symbols = symbols.substr(1, m_numSymbols - 2) + symbols[0];
+		symbols = symbols.substr(1, m_numSymbols - 1) + symbols[0];
 	}
 }
 
