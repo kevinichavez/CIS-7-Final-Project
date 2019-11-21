@@ -24,12 +24,8 @@ void setupIndexMap(unordered_map<char, int>& map, string s) {
 }
 
 Vigenere::Vigenere() {
-	for (int i = 0; i < m_nonAlphaSymbols.size(); i++)
-		legalNonAlphaSet.insert(m_nonAlphaSymbols[i]);
-
 	genMatrix(m_alphabet, m_alphaMatrix);
 	genMatrix(m_nonAlphaSymbols, m_nonAlphaMatrix);
-
 	setupIndexMap(m_alphaIndeces, m_alphabet);
 	setupIndexMap(m_nonAlphaIndeces, m_nonAlphaSymbols);
 }
@@ -58,7 +54,7 @@ std::string Vigenere::encrypt(string plaintext, string key) {
 	for (int i = 0; i < key.size(); i++) {
 		if (isalpha(key[i]))
 			keyAlpha += key[i];
-		else if (legalNonAlphaSet.find(key[i]) != legalNonAlphaSet.end())
+		else if (m_nonAlphaIndeces.find(key[i]) != m_nonAlphaIndeces.end())
 			keyNonAlpha += key[i];
 	}
 
@@ -72,7 +68,7 @@ std::string Vigenere::encrypt(string plaintext, string key) {
 			encrypted += m_alphaMatrix[col][row];
 			totalAlpha++;
 		}
-		else if (legalNonAlphaSet.find(plaintext[i]) != legalNonAlphaSet.end()) {
+		else if (m_nonAlphaIndeces.find(plaintext[i]) != m_nonAlphaIndeces.end()) {
 			it = m_nonAlphaIndeces.find(plaintext[i]);
 			col = it->second;
 			it = m_nonAlphaIndeces.find(keyNonAlpha[totalNonAlpha % keyNonAlpha.size()]);
@@ -88,7 +84,42 @@ std::string Vigenere::encrypt(string plaintext, string key) {
 	return encrypted;
 }
 
+// Currently a copy of encrypt function
+// TODO: Modify to decrypt
 std::string Vigenere::decrypt(std::string ciphertext, std::string key) {
-	// TODO: IMPLEMENT THIS
-	return "";
+	string decrypted;
+
+	string keyAlpha, keyNonAlpha;
+
+	for (int i = 0; i < key.size(); i++) {
+		if (isalpha(key[i]))
+			keyAlpha += key[i];
+		else if (m_nonAlphaIndeces.find(key[i]) != m_nonAlphaIndeces.end())
+			keyNonAlpha += key[i];
+	}
+
+	unordered_map<char, int>::iterator it;
+	for (int i = 0, totalAlpha = 0, totalNonAlpha = 0, col, row; i < ciphertext.size(); i++) {
+		if (isalpha(ciphertext[i])) {
+			it = m_alphaIndeces.find(ciphertext[i]);
+			col = it->second;
+			it = m_alphaIndeces.find(keyAlpha[totalAlpha % keyAlpha.size()]);
+			row = it->second;
+			decrypted += m_alphaMatrix[col][row];
+			totalAlpha++;
+		}
+		else if (m_nonAlphaIndeces.find(ciphertext[i]) != m_nonAlphaIndeces.end()) {
+			it = m_nonAlphaIndeces.find(ciphertext[i]);
+			col = it->second;
+			it = m_nonAlphaIndeces.find(keyNonAlpha[totalNonAlpha % keyNonAlpha.size()]);
+			row = it->second;
+			if (islower(ciphertext[i]))
+				decrypted += tolower(m_nonAlphaMatrix[col][row]);
+			else decrypted += m_nonAlphaMatrix[col][row];
+			totalNonAlpha++;
+		}
+		else decrypted += ciphertext[i];
+	}
+
+	return decrypted;
 }
