@@ -6,11 +6,11 @@ using namespace std;
 
 int main() {
 
-	return 0;
-
 	Vigenere* cipher = new Vigenere;
 
-	cipher->printMatrix();
+	cipher->printAlphaMatrix();
+	cout << "------------------------------------\n";
+	cipher->printNonAlphaMatrix();
 
 	delete cipher;
 }
