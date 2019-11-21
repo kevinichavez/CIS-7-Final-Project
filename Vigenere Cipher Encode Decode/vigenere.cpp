@@ -71,10 +71,20 @@ std::string Vigenere::encrypt(string plaintext, string key) {
 
 	extractAlphaNonAlpha(keyAlpha, keyNonAlpha, key);
 
+	// If no alphabetic characters are in key, do not encrypt alphabetic characters in plaintext
+	if (keyAlpha == "") {
+		keyAlpha = m_alphaMatrix[0][0];
+	}
+
+	// If no non-alphabetic characters are in key, do not encrypt non-alphabetic characters in plaintext
+	if (keyNonAlpha == "") {
+		keyNonAlpha = m_nonAlphaMatrix[0][0];
+	}
+
 	unordered_map<char, int>::iterator it;
 	for (int i = 0, totalAlpha = 0, totalNonAlpha = 0, col, row; i < plaintext.size(); i++) {
 		if (isalpha(plaintext[i])) {
-			it = m_alphaIndeces.find(plaintext[i]);
+			it = m_alphaIndeces.find(toupper(plaintext[i]));
 			col = it->second;
 			it = m_alphaIndeces.find(keyAlpha[totalAlpha % keyAlpha.size()]);
 			row = it->second;
@@ -104,13 +114,23 @@ std::string Vigenere::decrypt(std::string ciphertext, std::string key) {
 
 	extractAlphaNonAlpha(keyAlpha, keyNonAlpha, key);
 
+	// If no alphabetic characters are in key, do not decrypt alphabetic characters in ciphertext
+	if (keyAlpha == "") {
+		keyAlpha = m_alphaMatrix[0][0];
+	}
+
+	// If no non-alphabetic characters are in key, do not decrypt non-alphabetic characters in ciphertext
+	if (keyNonAlpha == "") {
+		keyNonAlpha = m_nonAlphaMatrix[0][0];
+	}
+
 	unordered_map<char, int>::iterator it;
 	for (int i = 0, totalAlpha = 0, totalNonAlpha = 0, col, row; i < ciphertext.size(); i++) {
 		if (isalpha(ciphertext[i])) {
 			it = m_alphaIndeces.find(keyAlpha[totalAlpha % keyAlpha.size()]);
 			row = it->second;
-			col = findColumn(m_alphaMatrix, row, ciphertext[i]);
-			// We use the 0th row because it is guarenteed to be in alphabetical order
+			col = findColumn(m_alphaMatrix, row, toupper(ciphertext[i]));
+			// We use the 0th col because it is guarenteed to be in alphabetical order
 			if (islower(ciphertext[i]))
 				decrypted += tolower(m_alphaMatrix[0][col]);
 			else decrypted += m_alphaMatrix[0][col];
