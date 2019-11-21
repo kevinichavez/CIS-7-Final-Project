@@ -2,25 +2,29 @@
 #define VIGENERE_H
 #include "constants.h"
 #include <vector>
-#include <map>
+#include <unordered_set>
 
 class Vigenere {
 
 private:
-	std::vector<std::vector<char>> m_matrix;
-	int m_numSymbols;
+	std::unordered_set<char> legalNotAlpha;
+	std::vector<std::vector<char>> m_alphaMatrix;
+	std::vector<std::vector<char>> m_nonAlphaMatrix;
+	std::string m_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	std::string m_nonAlphaSymbols = ".,<>?!/\\'\"[]{}+=-_~`@#$%^&*0123456789";
 
-	void initializeMatrix(std::string symbols);
+	void printMatrix(const std::vector<std::vector<char>>& matrix, int n);
 
 public:
 	// Default Constructor
 	Vigenere();
 
-	// Custom symbol table
-	Vigenere(std::string symbols);
-
 	// Debug Print
-	void printMatrix();
+	void printAlphaMatrix();
+	void printNonAlphaMatrix();
+
+	// Encrypt message with given key
+	std::string encrypt(std::string message, std::string key);
 };
 
 #endif

@@ -6,7 +6,9 @@ using namespace std;
 
 int main() {
 
-	Vigenere* cipher = new Vigenere("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+	return 0;
+
+	Vigenere* cipher = new Vigenere;
 
 	cipher->printMatrix();
 

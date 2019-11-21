@@ -5,39 +5,42 @@
 
 using namespace std;
 
-void Vigenere::initializeMatrix(string symbols) {
+void genMatrix(string s, vector<vector<char>>& matrix) {
+	matrix.resize(s.size(), vector<char>(s.size()));
 
-	m_numSymbols = symbols.size();
-
-	if (m_numSymbols < 2) {
-		cerr << "Symbol table was too small.\n";
-		return;
+	for (int i = 0; i < s.size(); i++) {
+		for (int j = 0; j < s.size(); j++)
+			matrix[i][j] = s[j];
+		s = s.substr(1, s.size() - 1) + s[0];
 	}
 
 
-	m_matrix.resize(m_numSymbols, vector<char>(m_numSymbols));
-
-	// Fill matrix with values based on the symbol table
-	for (int i = 0; i < m_numSymbols; i++) {
-		for (int j = 0; j < m_numSymbols; j++)
-			m_matrix[i][j] = symbols[j];
-		symbols = symbols.substr(1, m_numSymbols - 1) + symbols[0];
-	}
 }
 
 Vigenere::Vigenere() {
-	initializeMatrix(DEFAULT_TABLE);
+	for (int i = 0; i < m_nonAlphaSymbols.size(); i++)
+		legalNotAlpha.insert(m_nonAlphaSymbols[i]);
 
+	genMatrix(m_alphabet, m_alphaMatrix);
+	genMatrix(m_nonAlphaSymbols, m_nonAlphaMatrix);
 }
 
-Vigenere::Vigenere(std::string symbols) {
-	initializeMatrix(symbols);
+void Vigenere::printAlphaMatrix() {
+	printMatrix(m_alphaMatrix, m_alphabet.size());
 }
 
-void Vigenere::printMatrix() {
-	for (int i = 0; i < m_numSymbols; i++) {
-		for (int j = 0; j < m_numSymbols; j++)
-			cout << m_matrix[i][j] << " ";
+void Vigenere::printNonAlphaMatrix() {
+	printMatrix(m_nonAlphaMatrix, m_nonAlphaSymbols.size());
+}
+
+void Vigenere::printMatrix(const vector<vector<char>>& matrix, int n) {
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++)
+			cout << matrix[i][j] << " ";
 		cout << "\n";
 	}
+}
+
+std::string Vigenere::encrypt(std::string message, std::string key) {
+	return std::string();
 }
