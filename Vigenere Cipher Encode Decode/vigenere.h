@@ -15,6 +15,7 @@ private:
 	std::unordered_map<char, int> m_nonAlphaIndeces;
 
 	void printMatrix(const std::vector<std::vector<char>>& matrix, int n);
+	void extractAlphaNonAlpha(std::string& keyAlpha, std::string& keyNonAlpha, std::string keyPhrase);
 
 public:
 	// Default Constructor

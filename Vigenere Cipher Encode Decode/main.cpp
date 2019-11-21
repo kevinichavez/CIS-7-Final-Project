@@ -10,7 +10,7 @@ int main() {
 
 	string otp = "X V H E   U W   N O P G D Z";
 	string enc = cipher->encrypt("T H I S  I S  S E C R E T", otp);
-	string dec = (enc, otp);
+	string dec = cipher->decrypt(enc, otp);
 
 	cout << "Encrypted message: " << enc << "\n";
 	cout << "Decrypted message: " << dec << "\n";
