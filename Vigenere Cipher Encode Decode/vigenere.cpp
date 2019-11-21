@@ -50,7 +50,7 @@ void Vigenere::printMatrix(const vector<vector<char>>& matrix, int n) {
 	}
 }
 
-std::string Vigenere::encrypt(string message, string key) {
+std::string Vigenere::encrypt(string plaintext, string key) {
 	string encrypted;
 
 	string keyAlpha, keyNonAlpha;
@@ -63,27 +63,32 @@ std::string Vigenere::encrypt(string message, string key) {
 	}
 
 	unordered_map<char, int>::iterator it;
-	for (int i = 0, totalAlpha = 0, totalNonAlpha = 0, col, row; i < message.size(); i++) {
-		if (isalpha(message[i])) {
-			it = m_alphaIndeces.find(message[i]);
+	for (int i = 0, totalAlpha = 0, totalNonAlpha = 0, col, row; i < plaintext.size(); i++) {
+		if (isalpha(plaintext[i])) {
+			it = m_alphaIndeces.find(plaintext[i]);
 			col = it->second;
 			it = m_alphaIndeces.find(keyAlpha[totalAlpha % keyAlpha.size()]);
 			row = it->second;
 			encrypted += m_alphaMatrix[col][row];
 			totalAlpha++;
 		}
-		else if (legalNonAlphaSet.find(message[i]) != legalNonAlphaSet.end()) {
-			it = m_nonAlphaIndeces.find(message[i]);
+		else if (legalNonAlphaSet.find(plaintext[i]) != legalNonAlphaSet.end()) {
+			it = m_nonAlphaIndeces.find(plaintext[i]);
 			col = it->second;
 			it = m_nonAlphaIndeces.find(keyNonAlpha[totalNonAlpha % keyNonAlpha.size()]);
 			row = it->second;
-			if (islower(message[i]))
+			if (islower(plaintext[i]))
 				encrypted += tolower(m_nonAlphaMatrix[col][row]);
 			else encrypted += m_nonAlphaMatrix[col][row];
 			totalNonAlpha++;
 		}
-		else encrypted += message[i];
+		else encrypted += plaintext[i];
 	}
 
 	return encrypted;
+}
+
+std::string Vigenere::decrypt(std::string ciphertext, std::string key) {
+	// TODO: IMPLEMENT THIS
+	return "";
 }

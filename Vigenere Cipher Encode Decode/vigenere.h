@@ -27,7 +27,10 @@ public:
 	void printNonAlphaMatrix();
 
 	// Encrypt message with given key
-	std::string encrypt(std::string message, std::string key);
+	std::string encrypt(std::string plaintext, std::string key);
+
+	// Decrypt message with given key
+	std::string decrypt(std::string ciphertext, std::string key);
 };
 
 #endif
