@@ -21,7 +21,6 @@ void Vigenere::initializeMatrix(string symbols) {
 	for (int i = 0; i < m_numSymbols; i++) {
 		for (int j = 0; j < m_numSymbols; j++)
 			m_matrix[i][j] = symbols[j];
-
 		symbols = symbols.substr(1, m_numSymbols - 2) + symbols[0];
 	}
 }
@@ -29,4 +28,16 @@ void Vigenere::initializeMatrix(string symbols) {
 Vigenere::Vigenere() {
 	initializeMatrix(DEFAULT_TABLE);
 
+}
+
+Vigenere::Vigenere(std::string symbols) {
+	initializeMatrix(symbols);
+}
+
+void Vigenere::printMatrix() {
+	for (int i = 0; i < m_numSymbols; i++) {
+		for (int j = 0; j < m_numSymbols; j++)
+			cout << m_matrix[i][j] << " ";
+		cout << "\n";
+	}
 }

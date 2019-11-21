@@ -1,11 +1,14 @@
 #include <iostream>
+#include <string>
 #include "vigenere.h"
+
+using namespace std;
 
 int main() {
 
-	Vigenere* cipher = new Vigenere;
+	Vigenere* cipher = new Vigenere("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
-	std::cout << "Hello, world!\n";
+	cipher->printMatrix();
 
 	delete cipher;
 }

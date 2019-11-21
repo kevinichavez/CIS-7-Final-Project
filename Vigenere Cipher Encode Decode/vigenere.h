@@ -15,6 +15,12 @@ private:
 public:
 	// Default Constructor
 	Vigenere();
+
+	// Custom symbol table
+	Vigenere(std::string symbols);
+
+	// Debug Print
+	void printMatrix();
 };
 
 #endif
