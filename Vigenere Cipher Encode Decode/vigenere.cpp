@@ -1,5 +1,4 @@
 #include "vigenere.h"
-#include "constants.h"
 #include <iostream>
 #include <string>
 #include <unordered_map>
