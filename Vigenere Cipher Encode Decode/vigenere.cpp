@@ -62,12 +62,25 @@ std::string Vigenere::encrypt(string message, string key) {
 			keyNonAlpha += key[i];
 	}
 
-	for (int i = 0, keyAlphaIndex = 0, keyNonAlphaIndex = 0; i < message.size(); i++) {
+	unordered_map<char, int>::iterator it;
+	for (int i = 0, totalAlpha = 0, totalNonAlpha = 0, col, row; i < message.size(); i++) {
 		if (isalpha(message[i])) {
-
+			it = m_alphaIndeces.find(message[i]);
+			col = it->second;
+			it = m_alphaIndeces.find(keyAlpha[totalAlpha % keyAlpha.size()]);
+			row = it->second;
+			encrypted += m_alphaMatrix[col][row];
+			totalAlpha++;
 		}
 		else if (legalNonAlphaSet.find(message[i]) != legalNonAlphaSet.end()) {
-
+			it = m_nonAlphaIndeces.find(message[i]);
+			col = it->second;
+			it = m_nonAlphaIndeces.find(keyNonAlpha[totalNonAlpha % keyNonAlpha.size()]);
+			row = it->second;
+			if (islower(message[i]))
+				encrypted += tolower(m_nonAlphaMatrix[col][row]);
+			else encrypted += m_nonAlphaMatrix[col][row];
+			totalNonAlpha++;
 		}
 		else encrypted += message[i];
 	}
