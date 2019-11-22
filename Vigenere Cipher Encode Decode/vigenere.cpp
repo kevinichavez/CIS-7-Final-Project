@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string>
 #include <unordered_map>
-#include <unordered_set>
 #include <cctype>
 
 using namespace std;
@@ -95,7 +94,7 @@ string Vigenere::encrypt(string plaintext, string key) {
 			it = m_alphaIndeces.find(toupper(plaintext[i]));
 			col = it->second;
 			// Find index of current character from the key
-			it = m_alphaIndeces.find(keyAlpha[totalAlpha % keyAlpha.size()]);
+			it = m_alphaIndeces.find(toupper(keyAlpha[totalAlpha % keyAlpha.size()]));
 			row = it->second;
 
 			// Use two indexes to find the cipher character by inputting into alpha matrix
@@ -142,7 +141,7 @@ string Vigenere::decrypt(string ciphertext, string key) {
 	for (int i = 0, totalAlpha = 0, totalNonAlpha = 0, col, row; i < ciphertext.size(); i++) {
 		if (isalpha(ciphertext[i])) {
 			// Get the row using the key
-			it = m_alphaIndeces.find(keyAlpha[totalAlpha % keyAlpha.size()]);
+			it = m_alphaIndeces.find(toupper(keyAlpha[totalAlpha % keyAlpha.size()]));
 			row = it->second;
 			// Find the column using the key and the current ciphertext char
 			col = findColumn(m_alphaMatrix, row, toupper(ciphertext[i]));
