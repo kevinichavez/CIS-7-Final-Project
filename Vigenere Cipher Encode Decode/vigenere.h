@@ -1,6 +1,5 @@
 #ifndef VIGENERE_H
 #define VIGENERE_H
-#include "constants.h"
 #include <vector>
 #include <unordered_map>
 

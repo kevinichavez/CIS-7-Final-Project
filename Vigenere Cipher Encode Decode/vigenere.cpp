@@ -1,5 +1,4 @@
 #include "vigenere.h"
-#include "constants.h"
 #include <iostream>
 #include <string>
 #include <unordered_map>
@@ -8,6 +7,7 @@
 
 using namespace std;
 
+// Fill 2D vector with values
 void genMatrix(string s, vector<vector<char>>& matrix) {
 	matrix.resize(s.size(), vector<char>(s.size()));
 
@@ -18,12 +18,14 @@ void genMatrix(string s, vector<vector<char>>& matrix) {
 	}
 }
 
+// Map characters to indeces to be used when getting values from matrix
 void setupIndexMap(unordered_map<char, int>& map, string s) {
 	for (int i = 0; i < s.size(); i++)
 		map.insert({ s[i], i });
 }
 
-int findColumn(vector<vector<char>> matrix, int row, char key) {
+// Given value in a matrix and its row, find the column
+int findColumn(const vector<vector<char>>& matrix, int row, char key) {
 	for (int i = 0; i < matrix.size(); i++)
 		if (matrix[i][row] == key)
 			return i;
@@ -31,6 +33,7 @@ int findColumn(vector<vector<char>> matrix, int row, char key) {
 	return -1;
 }
 
+// Default constructor
 Vigenere::Vigenere() {
 	genMatrix(m_alphabet, m_alphaMatrix);
 	genMatrix(m_nonAlphaSymbols, m_nonAlphaMatrix);
@@ -38,14 +41,17 @@ Vigenere::Vigenere() {
 	setupIndexMap(m_nonAlphaIndeces, m_nonAlphaSymbols);
 }
 
+// Debug function to print current alphabet matrix
 void Vigenere::printAlphaMatrix() {
 	printMatrix(m_alphaMatrix, m_alphabet.size());
 }
 
+// Debug function to print current non-alphabet matrix
 void Vigenere::printNonAlphaMatrix() {
 	printMatrix(m_nonAlphaMatrix, m_nonAlphaSymbols.size());
 }
 
+// Prints values of 2D vector with newlines seperating rows
 void Vigenere::printMatrix(const vector<vector<char>>& matrix, int n) {
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++)
@@ -54,7 +60,7 @@ void Vigenere::printMatrix(const vector<vector<char>>& matrix, int n) {
 	}
 }
 
-
+// Seperates string into its alphabetic chars and legal non-alphabetic chars
 void Vigenere::extractAlphaNonAlpha(string& keyAlpha, string& keyNonAlpha, string keyPhrase) {
 	for (int i = 0; i < keyPhrase.size(); i++) {
 		if (isalpha(keyPhrase[i]))
@@ -64,7 +70,8 @@ void Vigenere::extractAlphaNonAlpha(string& keyAlpha, string& keyNonAlpha, strin
 	}
 }
 
-std::string Vigenere::encrypt(string plaintext, string key) {
+// Encrypt string with given key
+string Vigenere::encrypt(string plaintext, string key) {
 	string encrypted;
 
 	string keyAlpha, keyNonAlpha;
@@ -84,16 +91,21 @@ std::string Vigenere::encrypt(string plaintext, string key) {
 	unordered_map<char, int>::iterator it;
 	for (int i = 0, totalAlpha = 0, totalNonAlpha = 0, col, row; i < plaintext.size(); i++) {
 		if (isalpha(plaintext[i])) {
+			// Find index of current character from plaintext
 			it = m_alphaIndeces.find(toupper(plaintext[i]));
 			col = it->second;
+			// Find index of current character from the key
 			it = m_alphaIndeces.find(keyAlpha[totalAlpha % keyAlpha.size()]);
 			row = it->second;
+
+			// Use two indexes to find the cipher character by inputting into alpha matrix
 			if (islower(plaintext[i]))
 				encrypted += tolower(m_alphaMatrix[col][row]);
 			else encrypted += m_alphaMatrix[col][row];
 			totalAlpha++;
 		}
 		else if (m_nonAlphaIndeces.find(plaintext[i]) != m_nonAlphaIndeces.end()) {
+			// Similar process to above
 			it = m_nonAlphaIndeces.find(plaintext[i]);
 			col = it->second;
 			it = m_nonAlphaIndeces.find(keyNonAlpha[totalNonAlpha % keyNonAlpha.size()]);
@@ -101,13 +113,15 @@ std::string Vigenere::encrypt(string plaintext, string key) {
 			encrypted += m_nonAlphaMatrix[col][row];
 			totalNonAlpha++;
 		}
+		// If the char isn't Az-Zz or a legal non-letter symbol, don't change it
 		else encrypted += plaintext[i];
 	}
 
 	return encrypted;
 }
 
-std::string Vigenere::decrypt(std::string ciphertext, std::string key) {
+// Decrypt string with given key
+string Vigenere::decrypt(string ciphertext, string key) {
 	string decrypted;
 
 	string keyAlpha, keyNonAlpha;
@@ -127,15 +141,18 @@ std::string Vigenere::decrypt(std::string ciphertext, std::string key) {
 	unordered_map<char, int>::iterator it;
 	for (int i = 0, totalAlpha = 0, totalNonAlpha = 0, col, row; i < ciphertext.size(); i++) {
 		if (isalpha(ciphertext[i])) {
+			// Get the row using the key
 			it = m_alphaIndeces.find(keyAlpha[totalAlpha % keyAlpha.size()]);
 			row = it->second;
+			// Find the column using the key and the current ciphertext char
 			col = findColumn(m_alphaMatrix, row, toupper(ciphertext[i]));
-			// We use the 0th col because it is guarenteed to be in alphabetical order
+			// We use the 0th char vector because it is guarenteed to be in order
 			if (islower(ciphertext[i]))
 				decrypted += tolower(m_alphaMatrix[0][col]);
 			else decrypted += m_alphaMatrix[0][col];
 			totalAlpha++;
 		}
+		// See above comments
 		else if (m_nonAlphaIndeces.find(ciphertext[i]) != m_nonAlphaIndeces.end()) {
 			it = m_nonAlphaIndeces.find(keyNonAlpha[totalNonAlpha % keyNonAlpha.size()]);
 			row = it->second;
@@ -143,6 +160,7 @@ std::string Vigenere::decrypt(std::string ciphertext, std::string key) {
 			decrypted += m_nonAlphaMatrix[0][col];
 			totalNonAlpha++;
 		}
+		// If the character is in neither matrix, place it without change
 		else decrypted += ciphertext[i];
 	}
 
