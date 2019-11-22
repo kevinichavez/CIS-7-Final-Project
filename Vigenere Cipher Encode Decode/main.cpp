@@ -7,10 +7,10 @@
 
 using namespace std;
 
-void printEncDec(string plaintext, string otp, Vigenere* cipher);
 string getMultiLineInput();
 
 int main() {
+	cout << "Welcome to the Vigenere Cipher tool!\n";
 
 	Vigenere* cipher = new Vigenere;
 
@@ -21,8 +21,6 @@ int main() {
 	bool running = true;
 
 	while (running) {
-		output.open("output.log", ios::out | ios::app);
-		cout << "Welcome to the Vigenere Cipher tool!\n";
 		cout << "Would you like to encrypt or decrypt a message? (Enter 'e' or 'd')\n";
 		getline(cin, input);
 
@@ -36,13 +34,15 @@ int main() {
 		cout << "Now enter your key. Enter a blank line when you are done.\n";
 		key = getMultiLineInput();
 
+		output.open("output.log", ios::out | ios::app);
+
 		switch (input[0]) {
 		case 'e':
 		case 'E':
 			processedMessage = cipher->encrypt(message, key);
 			cout << "Your encrypted message is:\n" << processedMessage << '\n';
 			if (output.is_open())
-				output << "ENCRYPTION OUTPUT\n------------------------------\nPlaintext:\n" << message << "\nKey:\n" << key << "\nEncrypted Message:\n" << processedMessage << "\n------------------------------";
+				output << "ENCRYPTION OUTPUT\n------------------------------\nPlaintext:\n" << message << "\n\nKey:\n" << key << "\n\nEncrypted Message:\n" << processedMessage << "\n------------------------------\n";
 			break;
 
 		case 'd':
@@ -50,16 +50,16 @@ int main() {
 			processedMessage = cipher->decrypt(message, key);
 			cout << "Your decrypted message is:\n" << processedMessage << '\n';
 			if (output.is_open())
-				output << "DECRYPTION OUTPUT\n------------------------------\nCiphertext:\n" << message << "\nKey:\n" << key << "\nDecrypted Message: " << processedMessage << "\n------------------------------";
+				output << "DECRYPTION OUTPUT\n------------------------------\nCiphertext:\n" << message << "\n\nKey:\n" << key << "\n\nDecrypted Message:\n" << processedMessage << "\n------------------------------\n";
 			break;
 
 		default:
 			// Default case should never be called
 			break;
 		}
-		if (!output.is_open())
-			cout << "Could not write to output file.\n";
-		else output.close();
+		if (output.is_open())
+			output.close();
+		else cout << "Could not write to output file.\n";
 
 		while (input != "y" && input != "Y" && input != "n" && input != "N") {
 			cout << "Would you like to process another message? (y/n)\n";
@@ -68,8 +68,6 @@ int main() {
 				cout << "Enter 'y' or 'n'\n";
 		}
 
-		output.close();
-
 		switch (input[0]) {
 		case 'n':
 		case 'N':
@@ -77,20 +75,12 @@ int main() {
 			running = false;
 			break;
 		default:
+			cout << "############################################\n";
 			break;
 		}
 	}
 	
 	delete cipher;
-}
-
-void printEncDec(string plaintext, string otp, Vigenere* cipher) {
-	string enc = cipher->encrypt(plaintext, otp);
-	string dec = cipher->decrypt(enc, otp);
-
-	cout << "Plaintext: " << plaintext << '\n';
-	cout << "Encrypted message: " << enc << "\n";
-	cout << "Decrypted message: " << dec << "\n";
 }
 
 string getMultiLineInput() {
