@@ -3,6 +3,7 @@
 #include <cctype>
 #include <fstream>
 #include "vigenere.h"
+#include "ASCII_art.h"
 // #include <cassert>
 
 using namespace std;
@@ -39,18 +40,22 @@ int main() {
 		switch (input[0]) {
 		case 'e':
 		case 'E':
+			cout << "Encrypting message...";
+			cout << '\n' << LOCK_LOCKED << '\n';
 			processedMessage = cipher->encrypt(message, key);
-			cout << "Your encrypted message is:\n" << processedMessage << '\n';
+			cout << "Your encrypted message is:\n" << processedMessage << "\n";
 			if (output.is_open())
-				output << "ENCRYPTION OUTPUT\n------------------------------\nPlaintext:\n" << message << "\n\nKey:\n" << key << "\n\nEncrypted Message:\n" << processedMessage << "\n------------------------------\n";
+				output << LOG_ENCRYPTION_SEPERATOR << "Plaintext:" << message << "\nKey:" << key << "\nEncrypted Message:" << processedMessage;
 			break;
 
 		case 'd':
 		case 'D':
+			cout << "Decrypting message...";
+			cout << '\n' << LOCK_UNLOCKED << '\n';
 			processedMessage = cipher->decrypt(message, key);
-			cout << "Your decrypted message is:\n" << processedMessage << '\n';
+			cout << "Your decrypted message is:\n" << processedMessage << "\n";
 			if (output.is_open())
-				output << "DECRYPTION OUTPUT\n------------------------------\nCiphertext:\n" << message << "\n\nKey:\n" << key << "\n\nDecrypted Message:\n" << processedMessage << "\n------------------------------\n";
+				output << LOG_DECRYPTION_SEPERATOR << "Ciphertext:" << message << "\nKey:" << key << "\nDecrypted Message:" << processedMessage;
 			break;
 
 		default:
@@ -75,7 +80,7 @@ int main() {
 			running = false;
 			break;
 		default:
-			cout << "############################################\n";
+			cout << "\n############################################################\n\n";
 			break;
 		}
 	}
@@ -89,7 +94,7 @@ string getMultiLineInput() {
 
 	while (temp != "") {
 		getline(cin, temp);
-		result += temp;
+		result += ('\n' + temp);
 	}
 	return result;
 }
