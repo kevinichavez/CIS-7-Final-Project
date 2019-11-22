@@ -51,7 +51,7 @@ int main() {
 
 			// Write to log
 			if (output.is_open())
-				output << LOG_ENCRYPTION_SEPERATOR << "Plaintext:\n" << message << "\n\nKey:" << key << "\n\nEncrypted Message:\n" << processedMessage;
+				output << LOG_ENCRYPTION_SEPERATOR << "Plaintext:\n" << message << "\n\nKey:\n" << key << "\n\nEncrypted Message:\n" << processedMessage << "\n";
 			break;
 
 		case 'd':
@@ -63,7 +63,7 @@ int main() {
 
 			// Write to log
 			if (output.is_open())
-				output << LOG_DECRYPTION_SEPERATOR << "Ciphertext:\n" << message << "\n\nKey:\n" << key << "\n\nDecrypted Message:\n" << processedMessage;
+				output << LOG_DECRYPTION_SEPERATOR << "Ciphertext:\n" << message << "\n\nKey:\n" << key << "\n\nDecrypted Message:\n" << processedMessage << "\n";
 			break;
 
 		default:
@@ -75,7 +75,7 @@ int main() {
 		else cout << "Could not write to output file.\n";
 
 		while (input != "y" && input != "Y" && input != "n" && input != "N") {
-			cout << "Would you like to process another message? (y/n)\n";
+			cout << "Would you like to process another message? (y/n) ";
 			getline(cin, input);
 			if (input != "y" && input != "Y" && input != "n" && input != "N")
 				cout << "Enter 'y' or 'n'\n";
@@ -98,15 +98,16 @@ int main() {
 
 // Gets multiple lines of input from keyboard by looping until a blank line is entered
 string getMultiLineInput() {
-	string temp = "temp";
+	string temp;
 	string result;
 
-	while (temp != "") {
+	do {
 		getline(cin, temp);
 		result += ('\n' + temp);
-	}
-	if (result == "")
+	} while (temp != "");
+
+	if (result == "\n")
 		return "";
-	// Strips newline from beginning of message
-	return result.substr(1, result.size());
+	// Strips newline from beginning and end of message
+	return result.substr(1, result.size() - 2);
 }
