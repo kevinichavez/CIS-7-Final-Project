@@ -21,15 +21,19 @@ int main() {
 
 	bool running = true;
 
+	// Program main loop
 	while (running) {
+		// Ask user whether to encrypt or decrypt
 		cout << "Would you like to encrypt or decrypt a message? (Enter 'e' or 'd')\n";
 		getline(cin, input);
 
+		// Catch invalid input; return to beginning of loop if invalid
 		if (input != "d" && input != "D" && input != "e" && input != "E") {
 			cout << "You did not enter 'e' or 'd'\n";
 			continue;
 		}
 
+		// Get user message
 		cout << "Enter your message. When you are done, press enter on a blank line.\n";
 		message = getMultiLineInput();
 		cout << "Now enter your key. Enter a blank line when you are done.\n";
@@ -43,9 +47,11 @@ int main() {
 			cout << "Encrypting message...";
 			cout << '\n' << LOCK_LOCKED << '\n';
 			processedMessage = cipher->encrypt(message, key);
-			cout << "Your encrypted message is:\n" << processedMessage << "\n";
+			cout << "Your encrypted message:\n\n" << processedMessage << "\n\n";
+
+			// Write to log
 			if (output.is_open())
-				output << LOG_ENCRYPTION_SEPERATOR << "Plaintext:" << message << "\nKey:" << key << "\nEncrypted Message:" << processedMessage;
+				output << LOG_ENCRYPTION_SEPERATOR << "Plaintext:\n" << message << "\n\nKey:" << key << "\n\nEncrypted Message:\n" << processedMessage;
 			break;
 
 		case 'd':
@@ -53,9 +59,11 @@ int main() {
 			cout << "Decrypting message...";
 			cout << '\n' << LOCK_UNLOCKED << '\n';
 			processedMessage = cipher->decrypt(message, key);
-			cout << "Your decrypted message is:\n" << processedMessage << "\n";
+			cout << "Your decrypted message:\n\n" << processedMessage << "\n\n";
+
+			// Write to log
 			if (output.is_open())
-				output << LOG_DECRYPTION_SEPERATOR << "Ciphertext:" << message << "\nKey:" << key << "\nDecrypted Message:" << processedMessage;
+				output << LOG_DECRYPTION_SEPERATOR << "Ciphertext:\n" << message << "\n\nKey:\n" << key << "\n\nDecrypted Message:\n" << processedMessage;
 			break;
 
 		default:
@@ -80,7 +88,7 @@ int main() {
 			running = false;
 			break;
 		default:
-			cout << "\n############################################################\n\n";
+			cout << "\n##################################################################\n\n";
 			break;
 		}
 	}
@@ -88,6 +96,7 @@ int main() {
 	delete cipher;
 }
 
+// Gets multiple lines of input from keyboard by looping until a blank line is entered
 string getMultiLineInput() {
 	string temp = "temp";
 	string result;
@@ -96,5 +105,8 @@ string getMultiLineInput() {
 		getline(cin, temp);
 		result += ('\n' + temp);
 	}
-	return result;
+	if (result == "")
+		return "";
+	// Strips newline from beginning of message
+	return result.substr(1, result.size());
 }
