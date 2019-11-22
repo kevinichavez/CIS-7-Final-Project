@@ -26,5 +26,8 @@
     <ClInclude Include="vigenere.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ASCII_art.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
