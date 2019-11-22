@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cctype>
+#include <fstream>
 #include "vigenere.h"
 // #include <cassert>
 
@@ -13,38 +14,73 @@ int main() {
 
 	Vigenere* cipher = new Vigenere;
 
-	string input, message, key;
+	string input, message, key, processedMessage;
 
-	cout << "Welcome to the Vigenere Cipher tool!\n";
-	cout << "Would you like to encrypt or decrypt a message? (Enter 'e' or 'd')\n";
-	getline(cin, input);
+	ofstream output;
 
-	if (input != "d" && input != "D" && input != "e" && input != "E") {
-		delete cipher;
-		cout << "You did not enter 'e' or 'd'\n";
-		return 0;
+	bool running = true;
+
+	while (running) {
+		output.open("output.log", ios::out | ios::app);
+		cout << "Welcome to the Vigenere Cipher tool!\n";
+		cout << "Would you like to encrypt or decrypt a message? (Enter 'e' or 'd')\n";
+		getline(cin, input);
+
+		if (input != "d" && input != "D" && input != "e" && input != "E") {
+			cout << "You did not enter 'e' or 'd'\n";
+			continue;
+		}
+
+		cout << "Enter your message. When you are done, press enter on a blank line.\n";
+		message = getMultiLineInput();
+		cout << "Now enter your key. Enter a blank line when you are done.\n";
+		key = getMultiLineInput();
+
+		switch (input[0]) {
+		case 'e':
+		case 'E':
+			processedMessage = cipher->encrypt(message, key);
+			cout << "Your encrypted message is:\n" << processedMessage << '\n';
+			if (output.is_open())
+				output << "ENCRYPTION OUTPUT\n------------------------------\nPlaintext:\n" << message << "\nKey:\n" << key << "\nEncrypted Message:\n" << processedMessage << "\n------------------------------";
+			break;
+
+		case 'd':
+		case 'D':
+			processedMessage = cipher->decrypt(message, key);
+			cout << "Your decrypted message is:\n" << processedMessage << '\n';
+			if (output.is_open())
+				output << "DECRYPTION OUTPUT\n------------------------------\nCiphertext:\n" << message << "\nKey:\n" << key << "\nDecrypted Message: " << processedMessage << "\n------------------------------";
+			break;
+
+		default:
+			// Default case should never be called
+			break;
+		}
+		if (!output.is_open())
+			cout << "Could not write to output file.\n";
+		else output.close();
+
+		while (input != "y" && input != "Y" && input != "n" && input != "N") {
+			cout << "Would you like to process another message? (y/n)\n";
+			getline(cin, input);
+			if (input != "y" && input != "Y" && input != "n" && input != "N")
+				cout << "Enter 'y' or 'n'\n";
+		}
+
+		output.close();
+
+		switch (input[0]) {
+		case 'n':
+		case 'N':
+			cout << "Goodbye!\n";
+			running = false;
+			break;
+		default:
+			break;
+		}
 	}
-
-	cout << "Enter your message. When you are done, press enter on a blank line.\n";
-	message = getMultiLineInput();
-	cout << "Now enter your key. Enter a blank line when you are done.\n";
-	key = getMultiLineInput();
 	
-	switch (input[0]) {
-	case 'e':
-	case 'E':
-		cout << "Your encrypted message is:\n" << cipher->encrypt(message, key);
-		break;
-
-	case 'd':
-	case 'D':
-		cout << "Your decrypted message is:\n" << cipher->decrypt(message, key);
-		break;
-
-	default:
-		// Default case should never be called
-		break;
-	}
 	delete cipher;
 }
 
