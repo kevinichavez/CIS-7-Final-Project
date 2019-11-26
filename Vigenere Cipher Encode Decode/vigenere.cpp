@@ -7,12 +7,9 @@
 using namespace std;
 
 // Fill 2D vector with values
-void genMatrix(string s, vector<vector<char>>& matrix) {
-	matrix.resize(s.size(), vector<char>(s.size()));
-
+void genMatrix(string s, vector<string>& matrix) {
 	for (int i = 0; i < s.size(); i++) {
-		for (int j = 0; j < s.size(); j++)
-			matrix[i][j] = s[j];
+		matrix.push_back(s);
 		s = s.substr(1, s.size() - 1) + s[0];
 	}
 }
@@ -24,7 +21,7 @@ void setupIndexMap(unordered_map<char, int>& map, string s) {
 }
 
 // Given value in a matrix and its row, find the column
-int findColumn(const vector<vector<char>>& matrix, int row, char key) {
+int findColumn(const vector<string>& matrix, int row, char key) {
 	for (int i = 0; i < matrix.size(); i++)
 		if (matrix[i][row] == key)
 			return i;
@@ -42,21 +39,42 @@ Vigenere::Vigenere() {
 
 // Debug function to print current alphabet matrix
 void Vigenere::printAlphaMatrix() {
-	printMatrix(m_alphaMatrix, m_alphabet.size());
+	printMatrix(m_alphaMatrix);
 }
 
 // Debug function to print current non-alphabet matrix
 void Vigenere::printNonAlphaMatrix() {
-	printMatrix(m_nonAlphaMatrix, m_nonAlphaSymbols.size());
+	printMatrix(m_nonAlphaMatrix);
 }
 
-// Prints values of 2D vector with newlines seperating rows
-void Vigenere::printMatrix(const vector<vector<char>>& matrix, int n) {
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < n; j++)
+// Prints values of 2D vector with newlines seperating rows and characters 1-P representing indeces.
+void Vigenere::printMatrix(const vector<string>& matrix) {
+	cout << "  ";
+
+	int i;
+
+	for (i = 0; i < matrix.size() && i < 10; i++)
+		cout << i << " ";
+
+	if (i > 9)
+		for (i = 0; i + 10 < matrix.size(); i++)
+			cout << char('A' + i) << " ";
+
+	cout << "\n";
+	for (i = 0; i < matrix.size() && i < 10; i++) {
+		cout << i << " ";
+		for (int j = 0; j < matrix[i + 10].size(); j++)
 			cout << matrix[i][j] << " ";
 		cout << "\n";
 	}
+
+	if (i > 9)
+		for (i = 0; i + 10 < matrix.size(); i++) {
+			cout << char('A' + i) << " ";
+			for (int j = 0; j < matrix[i + 10].size(); j++)
+				cout << matrix[i + 10][j] << " ";
+			cout << "\n";
+		}
 }
 
 // Seperates string into its alphabetic chars and legal non-alphabetic chars
