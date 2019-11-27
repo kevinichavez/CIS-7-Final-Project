@@ -13,7 +13,7 @@ private:
 	std::unordered_map<char, int> m_alphaIndeces;
 	std::unordered_map<char, int> m_nonAlphaIndeces;
 
-	void printMatrix(const std::vector<std::string>& matrix);
+	// void printMatrix(const std::vector<std::string>& matrix);
 	void extractAlphaNonAlpha(std::string& keyAlpha, std::string& keyNonAlpha, std::string keyPhrase);
 
 public:
@@ -21,8 +21,8 @@ public:
 	Vigenere();
 
 	// Debug Print
-	void printAlphaMatrix();
-	void printNonAlphaMatrix();
+	// void printAlphaMatrix();
+	// void printNonAlphaMatrix();
 
 	// Encrypt message with given key
 	std::string encrypt(std::string plaintext, std::string key);

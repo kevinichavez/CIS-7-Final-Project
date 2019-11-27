@@ -6,10 +6,11 @@
 
 using namespace std;
 
-// Fill 2D vector with values
+// Fill string vector with values, syntax similar to 2D vector
 void genMatrix(string s, vector<string>& matrix) {
 	for (int i = 0; i < s.size(); i++) {
 		matrix.push_back(s);
+		// Take the first character s and add it to the end of the strong
 		s = s.substr(1, s.size() - 1) + s[0];
 	}
 }
@@ -36,6 +37,8 @@ Vigenere::Vigenere() {
 	setupIndexMap(m_alphaIndeces, m_alphabet);
 	setupIndexMap(m_nonAlphaIndeces, m_nonAlphaSymbols);
 }
+
+/* Debug, no longer needed
 
 // Debug function to print current alphabet matrix
 void Vigenere::printAlphaMatrix() {
@@ -76,6 +79,7 @@ void Vigenere::printMatrix(const vector<string>& matrix) {
 			cout << "\n";
 		}
 }
+*/
 
 // Seperates string into its alphabetic chars and legal non-alphabetic chars
 void Vigenere::extractAlphaNonAlpha(string& keyAlpha, string& keyNonAlpha, string keyPhrase) {
