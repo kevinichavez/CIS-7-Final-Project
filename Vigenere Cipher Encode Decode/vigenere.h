@@ -21,8 +21,8 @@ public:
 	Vigenere();
 
 	// Debug Print
-	void printAlphaMatrix();
-	void printNonAlphaMatrix();
+	// void printAlphaMatrix();
+	// void printNonAlphaMatrix();
 
 	// Encrypt message with given key
 	std::string encrypt(std::string plaintext, std::string key);
