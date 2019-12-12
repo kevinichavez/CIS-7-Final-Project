@@ -1,0 +1,35 @@
+Project Documentation
+
+    • What are the problems being solved with this project?
+	
+	One of the biggest concerns today is digital privacy and making sure that your information is not 	transmitted to potentially malicious third-parties. The main objective of this project that we 	made was to be able to solve the problem of making sure that a given message would 		only be able to read by an authorized user, whether that is a personal conversation or 	business correspondence between colleagues or associates.
+
+    • What solutions are you implementing in the project?
+	
+	To solve the problem of message privacy, the project we designed for that issue was a viginere 	cipher program that would take an input from the user (the message to be protected) and then 	a key with which to encrypt / decrypt the message. This program allows messages to remain 	confidential to only those the sender wishes. This is important because in the always-evolving 	word of cybersecurity, there are more and more methods of attackers stealing sensitive data 	being created every day. A basic understanding and implementation (this program) of 	operational security is helpful in our daily lives.
+
+    • Provide explanation of calculations and algorithm implementation.
+	
+	The main calculation happens in the class file of the program. Here, the alphanumerical and 	symbol matrix is constructed (the table that matches letters to numbers so the program can 	actually encrypt/decrypt with a key phrase). With that table built, the program is able to have a 	foundation for what to associate each character, number, or symbol with. As far as calculations 	go, the main calculation that is done is when the program accepts a user input that contains a 	non-supported character (like Unicode); when that happens, the program simply skips over it 	and does not manipulate it.
+
+	Algorithm wise, the way that the program moves through the phrase and encrypts/decrypts it is 	a function that compares each encountered character against the key the user provides; if it is in 	the supported character list, it will switch it with the corresponding character on the matrix built 	earlier.
+
+    • What are the program objectives? Explain how your program is interacting with the user and its purpose.
+	
+	When the program is run, it first asks the user to determine if they want to encrypt a message 	or decrypt a message. If the encryption option is chosen, it will ask for the user to input the 	message they want encrypted. It stores this as a string, which is what the program will 	manipulate to produce the encrypted message. Next, it prompts the user to enter a key phrase, 	and this will be used to know where on the viginere matrix the message characters will be 	switched to. Finally, after it has done that, it will print the newly-encrypted message on the 	screen, as well as save it to a log file (a new one named output.log is created if this is the first 	time the program has been used).
+
+	If the user chooses to decrypt a message, the decryption process is exactly the same as the 	encryption one, but the program works in reverse. It will ask the user to input the encrypted 	message, and then it will ask for a key (the one that was originally used to encrypt the message). 	If the message was entered correctly and the key corresponds to the one used during the 	encryption process, then the program will output the original, decrypted message. In addition to 	this, the program also has fun cosmetic ASCII art on successful encryption or decryption.
+
+    • How is discrete structures implemented in the C++ program?
+
+	One of the most obvious and probably main ways that discrete structures are implemented in 	this C++ program are that the characters and symbols used to build the viginere matrix are sets 	of characters. With these sets of characters, it allows the program to have the tools it needs to 	work with so that it can properly accomplish its purpose.
+	
+	Another way that discrete structures are implemented in this program is that the modulo 	operator is used to keep the numbers in range of the viginere table to ensure accuracy and so 	that the program doesn’t crash.
+
+    • What are the limitations of the program?
+
+	The main limitations of the program are the fact that it does not support any Unicode characters 	or spaces, and the fact that the program is not currently able to be automated in its current 	state (which would make encrypting / decrypting large numbers of phrases and messages very 	tedious, as the user would have to manually copy-paste each message one at a time).
+
+    • Provide recommendation on improving the limitations of the program.
+
+	The main avenues of improving the limitations of the program are rather simple in concept. For 	the first limitation, adding support for Unicode characters would be the first obvious step to 	improving the range of supported characters. The other limitation to be expanded upon, the 	lack of automation, would be to allow the user to add a flag when they launch the program from 	the command line (-e or -d for example) and two file names (something like “keys.txt” and 	“encrypted_messages.txt”). From there, the program would output the results to output.log as 	usual.
