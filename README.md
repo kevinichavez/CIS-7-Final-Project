@@ -12,6 +12,9 @@ The purpose of this program, beyond simply encrypting and decrypting messages, i
 
 Kevin Chavez, Zachary Hill, and Marcel Henderson
 
+# Team Name
+Cipherdragons
+
 # Version Number
 
 v1.0
